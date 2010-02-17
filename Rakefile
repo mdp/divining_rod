@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "divining_rod"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{A mobile phone web request profiler}
+    gem.description = %Q{A mobile phone web request profiler using definitions that look like rails routes}
     gem.email = "mark@mpercival.com"
     gem.homepage = "http://github.com/markpercival/divining_rod"
     gem.authors = ["Mark Percival"]

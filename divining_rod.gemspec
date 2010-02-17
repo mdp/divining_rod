@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Percival"]
   s.date = %q{2010-02-17}
-  s.description = %q{TODO: longer description of your gem}
+  s.description = %q{A mobile phone web request profiler using definitions that look like rails routes}
   s.email = %q{mark@mpercival.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
      "README.markdown",
      "Rakefile",
      "VERSION",
+     "divining_rod.gemspec",
      "lib/divining_rod.rb",
      "spec/basic_spec.rb",
      "spec/spec_helper.rb"
@@ -31,7 +32,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{TODO: one-line summary of your gem}
+  s.summary = %q{A mobile phone web request profiler}
   s.test_files = [
     "spec/basic_spec.rb",
      "spec/spec_helper.rb"
