@@ -2,10 +2,6 @@ require 'yaml'
 
 module DiviningRod
   
-  class UndefinedDefault < StandardError
-    
-  end
-  
   class Profile
     
     attr_reader :match
@@ -15,13 +11,17 @@ module DiviningRod
         @match = matcher if matcher.matches?(request)
         break if @match
       end
-      raise UndefinedDefault, "Please define a default group for DiviningRod" unless @match
+      nil
     end
 
     def group
       @match.group
     end
     alias_method :format, :group
+    
+    def recognized?
+      !!@match
+    end
     
     def method_missing(meth)
       if meth.to_s.match(/(.+)\?$/)

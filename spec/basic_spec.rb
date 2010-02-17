@@ -32,6 +32,22 @@ describe DiviningRod do
     profile.wap?.should be_false
   end
   
+  describe "without a default definition" do
+    
+    before :each do
+      @request = mock("rails_request", :user_agent => 'Foo Fone')
+      DiviningRod::Matchers.clear_definitions
+      DiviningRod::Matchers.define do |map|
+          map.ua /iPhone/, :webkit, :tags => [:iphone, :youtube, :geolocate]
+      end
+    end
+    
+    it "should not find a match" do
+      DiviningRod::Profile.new(@request).recognized?.should be_false
+    end
+    
+  end
+  
 end
 
 
