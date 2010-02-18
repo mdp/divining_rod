@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{divining_rod}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Percival"]
-  s.date = %q{2010-02-17}
+  s.date = %q{2010-02-18}
   s.description = %q{A mobile phone web request profiler using definitions that look like rails routes}
   s.email = %q{mark@mpercival.com}
   s.extra_rdoc_files = [
