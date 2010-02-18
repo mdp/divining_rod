@@ -11,12 +11,14 @@ A tool to help format your sites mobile pages.
 _initializers/divining\_rod.rb_
 
     DiviningRod::Matchers.define do |map|
+        # map.ua /user_agent_regex/, :format, :tags => []
         map.ua /iPhone/, :webkit, :tags => [:iphone, :youtube_capable]
         map.ua /Android/, :webkit, :tags => [:android, :youtube_capable, :google_gears]
+        map.subdomain /wap/, :wap, :tags => [:crappy_old_phone]
         
-        # Coming soon
-        # map.subdomain /wap/, :wap, :tags => [:crappy_old_phone]
-        map.default :html
+        # Enable this to forces a default format if unmatched
+        # otherwise it will return the request.format
+        # map.default :html 
     end
 
 _initializers/mime\_types.rb_
@@ -33,10 +35,8 @@ _app/controllers/mobile\_controller.rb_
       private
 
       def detect_mobile_type
-        @profile = DiviningRod::Profile.new(request)
-        if @profile.recognized?
-          request.format = @profile.format
-        end
+        # If the profile isn't matched it defaults to request.format
+        @profile = DiviningRod::Profile.new(request).format
       end
 
     end
@@ -58,8 +58,6 @@ to do our best to keep the API the same.
 The user agent definitions will be updated here later this week.
 
 ## Todo
-
-* Add a subdomain router
 
 ### Copyright
 
