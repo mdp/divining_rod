@@ -36,7 +36,8 @@ _app/controllers/mobile\_controller.rb_
 
       def detect_mobile_type
         # If the profile isn't matched it defaults to request.format
-        @profile = DiviningRod::Profile.new(request).format
+        @profile = DiviningRod::Profile.new(request)
+        request.format = @profile.format
       end
 
     end

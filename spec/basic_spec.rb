@@ -66,7 +66,7 @@ describe DiviningRod do
   describe "without a default definition" do
 
     before :each do
-      @request = mock("rails_request", :user_agent => 'Foo Fone')
+      @request = mock("rails_request", :user_agent => 'Foo Fone', :format => :html)
       DiviningRod::Matchers.clear_definitions
       DiviningRod::Matchers.define do |map|
         map.ua /iPhone/, :webkit, :tags => [:iphone, :youtube, :geolocate]

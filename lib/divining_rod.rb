@@ -7,7 +7,7 @@ module DiviningRod
     attr_reader :match
 
     def initialize(request)
-      @request = request
+      @request = request.clone #Lets not mess with the real one
       matchers.each do |matcher|
         @match = matcher if matcher.matches?(request)
         break if @match
