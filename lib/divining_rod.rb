@@ -57,13 +57,8 @@ module DiviningRod
         yield(self)
       end
 
-      def clear_definitions
-        @definitions = []
-      end
-
       def ua(pattern, group, opts={})
-        @definitions ||= []
-        @definitions << Definition.new(group, opts) { |request|
+        add_definition Definition.new(group, opts) { |request|
           if pattern.match(request.user_agent)
             true
           end
@@ -71,8 +66,7 @@ module DiviningRod
       end
       
       def subdomain(pattern, group, opts={})
-        @definitions ||= []
-        @definitions << Definition.new(group, opts) { |request|
+        add_definition Definition.new(group, opts) { |request|
           if pattern.match(request.subdomains[0])
             true
           end
@@ -80,8 +74,16 @@ module DiviningRod
       end
 
       def default(group, opts = {})
+        add_definition Definition.new(group, opts) { |request| true }
+      end
+      
+      def add_definition(definition)
         @definitions ||= []
-        @definitions << Definition.new(group, opts) { |request| true }
+        @definitions << definition
+      end
+      
+      def clear_definitions
+        @definitions = []
       end
 
     end
