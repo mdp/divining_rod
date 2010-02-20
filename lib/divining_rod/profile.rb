@@ -5,11 +5,7 @@ module DiviningRod
 
     def initialize(request)
       @request = request.clone #Lets not mess with the real one
-      definitions.each do |definition|
-        @match = definition if definition.matches?(request)
-        break if @match
-      end
-      nil
+      @match = DiviningRod::Matchers.find_match_for(request)
     end
 
     def group

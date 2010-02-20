@@ -9,6 +9,17 @@ module DiviningRod
       def define
         yield(self)
       end
+      
+      def find_match_for(request)
+        match = nil
+        definitions.each do |definition|
+          if definition.matches?(request)
+           match = definition
+           break
+          end
+        end
+        match
+      end
 
       def ua(pattern, group = nil, opts={}, &blk)
         opts[:tags] = @parent_tags + opts[:tags].to_a if @parent_tags

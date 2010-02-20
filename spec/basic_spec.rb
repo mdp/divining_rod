@@ -6,9 +6,7 @@ describe DiviningRod do
     @request = mock("rails_request", :user_agent => 'My iPhone which is actually an iPad')
     DiviningRod::Matchers.clear_definitions
     DiviningRod::Matchers.define do |map|
-      map.ua /iPhone/, :webkit, :tags => [:iphone, :youtube, :geolocate] do |iphone|
-        iphone.ua /iPad/, :tags => [:ipad]
-      end
+      map.ua /iPhone/, :webkit, :tags => [:iphone, :youtube, :geolocate]
     end
   end
 
@@ -19,9 +17,7 @@ describe DiviningRod do
 
   it "should know if it belongs to a category tag" do
     profile = DiviningRod::Profile.new(@request)
-    p DiviningRod::Matchers.definitions
     profile.geolocate?.should be_true
-    profile.ipad?.should be_true
   end
 
   it "should know if it does not belongs to a category" do
