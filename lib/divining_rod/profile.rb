@@ -5,17 +5,17 @@ module DiviningRod
 
     def initialize(request)
       @request = request.clone #Lets not mess with the real one
-      @match = DiviningRod::Matchers.find_match_for(request)
+      @match = DiviningRod::Definitions.evaluate(request)
     end
 
-    def group
+    def format
       if @match
-        @match.group
+        @match.format
       else
         @request.format
       end
     end
-    alias_method :format, :group
+    alias_method :group, :format
 
     def recognized?
       !!@match
