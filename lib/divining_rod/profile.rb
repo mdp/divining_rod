@@ -5,7 +5,7 @@ module DiviningRod
 
     def initialize(request)
       @request = request.clone #Lets not mess with the real one
-      @match = DiviningRod::Definitions.evaluate(request)
+      @match = DiviningRod::Mapping.evaluate(request)
     end
 
     def format
@@ -32,10 +32,6 @@ module DiviningRod
       else
         super
       end
-    end
-
-    def definitions
-      DiviningRod::Matchers.definitions || []
     end
 
   end

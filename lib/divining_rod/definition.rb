@@ -16,9 +16,7 @@ module DiviningRod
         result = self
         unless self.children.empty?
           self.children.each do |child|
-            if child.evaluate(request)
-              child_result = child
-            end
+            child_result = child.evaluate(request)
             break if child_result
           end
         end

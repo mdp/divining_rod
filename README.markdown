@@ -10,11 +10,13 @@ A tool to help format your sites mobile pages.
 
 _initializers/divining\_rod.rb_
 
-    DiviningRod::Matchers.define do |map|
-        # map.ua /user_agent_regex/, :format => :blackberry, :tags => [:your_tag]
+    DiviningRod::Mapping.define do |map|
+        # map.ua /user_agent_regex/, :format => :wml, :tags => [:your_tag]
         map.ua /Apple.*Mobile.*Safari/, :format => :webkit, :tags => [:apple, :youtube_capable] do |iphone|
           iphone.ua /iPhone/, :tags => :iphone
-          iphone.ua /iPad/, :tags => :ipad
+          iphone.ua /iPad/, :tags => :ipad do |ipad|
+            ipad.ua /Unicorns/, :tags => [:omg_unicorns, :magic], :format => :happiness
+          end
           iphone.ua /iPod/, :tags => :ipod
         map.ua /Android/, :format => :webkit, :tags => [:android, :youtube_capable, :google_gears]
         map.subdomain /wap/, :format => :wap, :tags => [:crappy_old_phone]
@@ -56,10 +58,12 @@ _app/views/mobile/show.webkit.html_
     
 ## Note on the development
 
-This is still very much in beta, but we are using it in production. As such we plan
-to do our best to keep the API the same.
+Tags always merge, while all other hash keys get overridden. Tags also will always allow you to call them as
+booleans. Ex @profile.iphone? 
 
-The user agent definitions will be updated here later this week.
+If the :format key isn't available we default to request.format. 
+
+Any of keys can be used and queried arbitrarily.
 
 ## Todo
 

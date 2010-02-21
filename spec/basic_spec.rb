@@ -4,8 +4,8 @@ describe DiviningRod do
 
   before :each do
     @request = mock("rails_request", :user_agent => 'My iPhone which is actually an iPad')
-    DiviningRod::Definitions.clear_definitions
-    DiviningRod::Definitions.define do |map|
+    DiviningRod::Mapping.clear_definitions
+    DiviningRod::Mapping.define do |map|
       map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate] do |iphone|
         iphone.ua /iPad/, :tags => [:ipad]
       end
@@ -32,8 +32,8 @@ describe DiviningRod do
     
     before :each do
       @request = mock("rails_request", :user_agent => 'My Foo Fone', :format => :html)
-      DiviningRod::Definitions.clear_definitions
-      DiviningRod::Definitions.define do |map|
+      DiviningRod::Mapping.clear_definitions
+      DiviningRod::Mapping.define do |map|
         map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate]
       end
     end
@@ -51,8 +51,8 @@ describe DiviningRod do
     
     before :each do
       @request = mock("rails_request", :user_agent => 'My Foo Fone')
-      DiviningRod::Definitions.clear_definitions
-      DiviningRod::Definitions.define do |map|
+      DiviningRod::Mapping.clear_definitions
+      DiviningRod::Mapping.define do |map|
         map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate]
         map.default :format => :html
       end
@@ -70,8 +70,8 @@ describe DiviningRod do
 
     before :each do
       @request = mock("rails_request", :user_agent => 'Foo Fone', :format => :html)
-      DiviningRod::Definitions.clear_definitions
-      DiviningRod::Definitions.define do |map|
+      DiviningRod::Mapping.clear_definitions
+      DiviningRod::Mapping.define do |map|
         map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate]
       end
     end
@@ -86,8 +86,8 @@ describe DiviningRod do
 
     before :each do
       @request = mock("rails_request", :user_agent => 'Foo Fone', :subdomains => ['wap'])
-      DiviningRod::Definitions.clear_definitions
-      DiviningRod::Definitions.define do |map|
+      DiviningRod::Mapping.clear_definitions
+      DiviningRod::Mapping.define do |map|
         map.subdomain /wap/, :format => :wap, :tags => [:shitty]
       end
     end
@@ -104,8 +104,8 @@ describe DiviningRod do
 
     before :each do
       @request = mock("rails_request", :user_agent => nil, :subdomains => [])
-      DiviningRod::Definitions.clear_definitions
-      DiviningRod::Definitions.define do |map|
+      DiviningRod::Mapping.clear_definitions
+      DiviningRod::Mapping.define do |map|
         map.ua /iPhone/, :format => :wap, :tags => [:shitty]
       end
     end
@@ -119,34 +119,34 @@ describe DiviningRod do
 end
 
 
-describe DiviningRod::Definitions do
+describe DiviningRod::Mapping do
 
   before :each do
     @request = mock("rails_request", :user_agent => 'iPhone Foo')
-    DiviningRod::Definitions.clear_definitions
-    DiviningRod::Definitions.define do |map|
+    DiviningRod::Mapping.clear_definitions
+    DiviningRod::Mapping.define do |map|
       map.ua /iPhone/, :format => :iphone, :tags => [:iphone, :youtube]
     end
   end
 
   it "should recognize an iPhone" do
-    DiviningRod::Definitions.definitions.first.evaluate(@request).should be_true
-    DiviningRod::Definitions.definitions.first.format.should eql(:iphone)
+    DiviningRod::Mapping.definitions.first.evaluate(@request).should be_true
+    DiviningRod::Mapping.definitions.first.format.should eql(:iphone)
   end
 
   describe "defining a default definition" do
 
     before :each do
       @request = mock("rails_request", :user_agent => 'Foo Fone')
-      DiviningRod::Definitions.clear_definitions
-      DiviningRod::Definitions.define do |map|
+      DiviningRod::Mapping.clear_definitions
+      DiviningRod::Mapping.define do |map|
         map.default :format => :unknown, :tags => [:html]
       end
     end
 
     it "should use the default route if no other match is found" do
-      DiviningRod::Definitions.definitions.first.evaluate(@request).should be_true
-      DiviningRod::Definitions.definitions.first.format.should eql(:unknown)
+      DiviningRod::Mapping.definitions.first.evaluate(@request).should be_true
+      DiviningRod::Mapping.definitions.first.format.should eql(:unknown)
     end
 
   end
