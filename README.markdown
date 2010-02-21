@@ -11,14 +11,17 @@ A tool to help format your sites mobile pages.
 _initializers/divining\_rod.rb_
 
     DiviningRod::Matchers.define do |map|
-        # map.ua /user_agent_regex/, :format, :tags => []
-        map.ua /iPhone/, :webkit, :tags => [:iphone, :youtube_capable]
-        map.ua /Android/, :webkit, :tags => [:android, :youtube_capable, :google_gears]
-        map.subdomain /wap/, :wap, :tags => [:crappy_old_phone]
+        # map.ua /user_agent_regex/, :format => :blackberry, :tags => [:your_tag]
+        map.ua /Apple.*Mobile.*Safari/, :format => :webkit, :tags => [:apple, :youtube_capable] do |iphone|
+          iphone.ua /iPhone/, :tags => :iphone
+          iphone.ua /iPad/, :tags => :ipad
+          iphone.ua /iPod/, :tags => :ipod
+        map.ua /Android/, :format => :webkit, :tags => [:android, :youtube_capable, :google_gears]
+        map.subdomain /wap/, :format => :wap, :tags => [:crappy_old_phone]
         
         # Enable this to forces a default format if unmatched
         # otherwise it will return the request.format
-        # map.default :html 
+        # map.default :format => :html 
     end
 
 _initializers/mime\_types.rb_
