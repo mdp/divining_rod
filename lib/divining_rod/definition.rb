@@ -25,7 +25,7 @@ module DiviningRod
     end
 
     def tags
-      @opts[:tags] ||= []
+      Array(@opts[:tags])
     end
     
     def format

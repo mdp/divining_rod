@@ -26,15 +26,16 @@ module DiviningRod
       #
       # Ex. map.pattern :ua, /iPhone/, :tags => [:apple, :webkit], :format => :webkit
       def pattern(type, pattern, opts = {})
+        @parents ||= []
         opts = self.merge_parent(opts)
         definition = Matchers.send(type.to_sym, pattern, opts)
-        add_definition(definition, @parent)
+        add_definition(definition, @parents.last)
         # And here's the recursive to let up define children of a definition
+        @parents << definition
         if block_given?
-          @parent = definition
           yield(self)
         end
-        @parent = nil #reset the scope
+        @parents.pop #back out of the scope
       end
 
       def default(opts = {})
@@ -43,8 +44,8 @@ module DiviningRod
 
       def add_definition(definition, parent = nil)
         @definitions ||= []
-        if parent && @definitions.index(parent)
-          @definitions[@definitions.index(parent)].children << definition
+        if parent 
+          parent.children << definition
         else
           @definitions << definition
         end
@@ -66,9 +67,9 @@ module DiviningRod
       protected
       
       def merge_parent(opts)
-        if @parent #merge the settings if they have a parent definition
-          tags = Array(opts[:tags]) | @parent.tags
-          opts = @parent.opts.merge(opts)
+        unless @parents.empty? #merge the settings if they have a parent definition
+          tags = Array(opts[:tags]) | @parents.last.tags
+          opts = @parents.last.opts.merge(opts)
           opts[:tags] = tags # tags are merged, not overridden
         end
         opts
