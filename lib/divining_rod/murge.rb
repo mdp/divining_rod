@@ -2,7 +2,7 @@ module DiviningRod
   module Murge
     
     # This is tacky, but I'm preserving tags in the option hash
-    # and only want to have to right this once
+    # and only want to have to write this once
     #
     def murge(old_opts, new_opts)
       old_opts = old_opts || {}
