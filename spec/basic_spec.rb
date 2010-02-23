@@ -4,8 +4,8 @@ describe DiviningRod do
 
   before :each do
     @request = mock("rails_request", :user_agent => 'My iPhone which is actually an iPad')
-    DiviningRod::Mapping.clear_definitions
-    DiviningRod::Mapping.define do |map|
+    
+    DiviningRod::Mappings.define do |map|
       map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate] do |iphone|
         iphone.ua /iPad/, :tags => [:ipad]
       end
@@ -32,8 +32,8 @@ describe DiviningRod do
     
     before :each do
       @request = mock("rails_request", :user_agent => 'My Foo Fone', :format => :html)
-      DiviningRod::Mapping.clear_definitions
-      DiviningRod::Mapping.define do |map|
+      
+      DiviningRod::Mappings.define do |map|
         map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate]
       end
     end
@@ -51,8 +51,8 @@ describe DiviningRod do
     
     before :each do
       @request = mock("rails_request", :user_agent => 'My Foo Fone')
-      DiviningRod::Mapping.clear_definitions
-      DiviningRod::Mapping.define do |map|
+      
+      DiviningRod::Mappings.define do |map|
         map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate]
         map.default :format => :html
       end
@@ -70,8 +70,8 @@ describe DiviningRod do
 
     before :each do
       @request = mock("rails_request", :user_agent => 'Foo Fone', :format => :html)
-      DiviningRod::Mapping.clear_definitions
-      DiviningRod::Mapping.define do |map|
+      
+      DiviningRod::Mappings.define do |map|
         map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate]
       end
     end
@@ -86,8 +86,8 @@ describe DiviningRod do
 
     before :each do
       @request = mock("rails_request", :user_agent => 'Foo Fone', :subdomains => ['wap'])
-      DiviningRod::Mapping.clear_definitions
-      DiviningRod::Mapping.define do |map|
+      
+      DiviningRod::Mappings.define do |map|
         map.subdomain /wap/, :format => :wap, :tags => [:shitty]
       end
     end
@@ -104,49 +104,14 @@ describe DiviningRod do
 
     before :each do
       @request = mock("rails_request", :user_agent => nil, :subdomains => [])
-      DiviningRod::Mapping.clear_definitions
-      DiviningRod::Mapping.define do |map|
+      
+      DiviningRod::Mappings.define do |map|
         map.ua /iPhone/, :format => :wap, :tags => [:shitty]
       end
     end
 
     it "should not find a match" do
       DiviningRod::Profile.new(@request).recognized?.should be_false
-    end
-
-  end
-
-end
-
-
-describe DiviningRod::Mapping do
-
-  before :each do
-    @request = mock("rails_request", :user_agent => 'iPhone Foo')
-    DiviningRod::Mapping.clear_definitions
-    DiviningRod::Mapping.define do |map|
-      map.ua /iPhone/, :format => :iphone, :tags => [:iphone, :youtube]
-    end
-  end
-
-  it "should recognize an iPhone" do
-    DiviningRod::Mapping.definitions.first.evaluate(@request).should be_true
-    DiviningRod::Mapping.definitions.first.format.should eql(:iphone)
-  end
-
-  describe "defining a default definition" do
-
-    before :each do
-      @request = mock("rails_request", :user_agent => 'Foo Fone')
-      DiviningRod::Mapping.clear_definitions
-      DiviningRod::Mapping.define do |map|
-        map.default :format => :unknown, :tags => [:html]
-      end
-    end
-
-    it "should use the default route if no other match is found" do
-      DiviningRod::Mapping.definitions.first.evaluate(@request).should be_true
-      DiviningRod::Mapping.definitions.first.format.should eql(:unknown)
     end
 
   end

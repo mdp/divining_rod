@@ -5,20 +5,19 @@ module DiviningRod
 
     def initialize(request)
       @request = request.clone #Lets not mess with the real one
-      @match = DiviningRod::Mapping.evaluate(request)
+      @match = DiviningRod::Mappings.evaluate(request)
     end
 
     def format
-      if @match
+      if @match && @match.format
         @match.format
       else
         @request.format
       end
     end
-    alias_method :group, :format
 
     def recognized?
-      !!@match
+      @match != DiviningRod::Mappings.root_definition
     end
 
     def method_missing(meth)

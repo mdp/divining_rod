@@ -31,7 +31,7 @@ describe DiviningRod::Definition do
       result = definition.evaluate('iphone ipad')
       result.should_not eql(definition)
       result.format.should eql(:ipad)
-      result.tags.should_not include(:overpriced) #should carry through tags at this point
+      result.tags.should include(:overpriced)
     end
     
     

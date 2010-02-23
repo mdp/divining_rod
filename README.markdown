@@ -12,10 +12,10 @@ _initializers/divining\_rod.rb_
 
     DiviningRod::Mapping.define do |map|
         # map.ua /user_agent_regex/, :format => :wml, :tags => [:your_tag]
-        map.ua /Apple.*Mobile.*Safari/, :format => :webkit, :tags => [:apple, :youtube_capable] do |iphone|
-          iphone.ua /iPhone/, :tags => :iphone
+        map.ua /Apple.*Mobile.*Safari/, :format => :webkit, :tags => [:apple] do |iphone|
+          iphone.ua /iPhone/, :tags => [:iphone, :youtube_capable]
           iphone.ua /iPad/, :tags => :ipad do |ipad|
-            ipad.ua /Unicorns/, :tags => [:omg_unicorns, :magic], :format => :happiness
+            ipad.ua /Newton/, :tags => [:newton_edition, :os8], :format => :ascii
           end
           iphone.ua /iPod/, :tags => :ipod
         map.ua /Android/, :format => :webkit, :tags => [:android, :youtube_capable, :google_gears]
