@@ -28,6 +28,8 @@ module DiviningRod
         else
           false
         end
+      elsif @match.opts.include?(meth.to_sym)
+        @match.opts[meth]
       else
         super
       end

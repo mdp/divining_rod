@@ -19,7 +19,6 @@ describe DiviningRod do
 
   it "should know if it belongs to a category tag" do
     profile = DiviningRod::Profile.new(@request)
-
     profile.ipad?.should be_true
   end
 

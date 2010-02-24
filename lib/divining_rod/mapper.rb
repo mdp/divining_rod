@@ -22,7 +22,7 @@ module DiviningRod
     end
 
     def default(opts = {})
-      definition = Definition.new(opts) { |request| true }
+      definition = Definition.new(opts) { true }
       append_to_parent(definition)
       definition
     end
@@ -47,10 +47,6 @@ module DiviningRod
           @parent.children << definition
         end
         definition
-      end
-      
-      def merge_options(opts)
-        
       end
 
   end

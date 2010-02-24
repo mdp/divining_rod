@@ -2,8 +2,8 @@ module DiviningRod
   class Definition
     include Murge
 
-    attr_accessor :prc, :group, :opts
-    attr_writer :children, :parent
+    attr_accessor :prc, :group, :opts, :parent
+    attr_writer :children
 
     def initialize(opts={}, &blk)
       @prc = blk
@@ -24,10 +24,6 @@ module DiviningRod
       end
       child_result || result
     end
-    
-    def parent
-      @parent
-    end
 
     def tags
       opts[:tags] || []
@@ -35,7 +31,7 @@ module DiviningRod
     
     def opts
       if parent
-        murge(parent.opts, @opts)
+        @murged_opts ||= murge(parent.opts, @opts)
       else
         @opts
       end
