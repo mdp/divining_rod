@@ -1,3 +1,7 @@
+<div style='float:left; margin-right:1em;'>
+  <img src='http://public.mpercival.com.s3.amazonaws.com/images/divining_rod.jpg' />
+</div>
+
 # Divining Rod
 
 A tool to profile web requests. Especially useful for mobile site development
