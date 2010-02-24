@@ -1,6 +1,6 @@
 # Divining Rod
 
-A tool to help format your sites mobile pages.
+A tool to profile web requests. Especially useful for mobile site development
 
 ## Installation
 
@@ -8,7 +8,7 @@ A tool to help format your sites mobile pages.
 
 ## Example
   
-  Using the example configuration (found in [example_config.rb](http://github.com/markpercival/divining_rod/blob/master/example_config.rb)])
+  Using the example configuration (found in [example_config.rb](http://github.com/markpercival/divining_rod/blob/master/example_config.rb))
   
     # For a request with the user agent
     # "Mozilla/5.0 (iPhone; U; CPU iPhone OS 2_2_1 like Mac OS X; en-us) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5H11 Safari/525.20"
@@ -18,21 +18,40 @@ A tool to help format your sites mobile pages.
     profile.name              #=> 'iPhone'
     profile.youtube_capable?  #=> true
     profile.format            #=> :webkit
+
+## Mappings
+
+Matches happen in the order they are defined, and then proceed down to the subsequent block. So for example:
+
+    DiviningRod::Mappings.define do |map|
+      map.ua /Apple/, :format => :webkit, :tags => [:apple, :iphone_os] do
+        iphone.ua /iPad/, :tags => :ipad, :name => 'iPad', :format => nil
+        iphone.ua /iPod/, :tags => :ipod, :name => 'iPod Touch'
+        iphone.ua /iPhone/, :tags => :iphone, :name => 'iPhone'
+      end
+    end
     
+Will match "Apple iPad" first with the /Apple/ matcher, then with the /iPad/ matcher, and the tags will be
     
+    [:apple, :iphone_os, :ipad] # Notice tags get appended, *not* overridden.
+
+And _:format_ will be set to _nil_
+
+Why _nil_? Because when :format is set to _nil_ and you ask for it, DiviningRod will return the original _request_ objects format.
+
 ## Usage
 
 _initializers/divining\_rod.rb_
-
+    
     DiviningRod::Mappings.define do |map|
         # Android based phones
         map.ua /Android/, :format => :webkit, :name => 'Android', :tags => [:android, :youtube_capable, :google_gears]
 
         # Apple iPhone OS
         map.ua /Apple.*Mobile.*Safari/, :format => :webkit, :tags => [:apple, :iphone_os, :youtube_capable] do |iphone|
-          iphone.ua /iPad/, :tags => :ipad, :name => 'iPad'
+          iphone.ua /iPad/, :tags => :ipad, :name => 'iPad', :format => nil
           iphone.ua /iPod/, :tags => :ipod, :name => 'iPod Touch'
-          iphone.ua /iPhone/, :tags => [:iphone], :name => 'iPhone'
+          iphone.ua /iPhone/, :tags => :iphone, :name => 'iPhone'
         end
 
         #Blackberry, needs more detail here
@@ -76,10 +95,8 @@ _app/views/mobile/show.webkit.html_
     
 ## Note on the development
 
-Tags always merge, while all other hash keys get overridden. Tags also will always allow you to call them as
-booleans. Ex @profile.iphone? 
-
-If the :format key isn't available we default to request.format.
+In version 0.3.* it was assumed you always passed in _format_. In 0.4 on, we require _format_ to
+be passed in explicitly with the rest of the options hash.
 
 ## Todo
 

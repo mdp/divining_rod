@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{divining_rod}
-  s.version = "0.3.1"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Percival"]
-  s.date = %q{2010-02-18}
+  s.date = %q{2010-02-23}
   s.description = %q{A mobile phone web request profiler using definitions that look like rails routes}
   s.email = %q{mark@mpercival.com}
   s.extra_rdoc_files = [
@@ -24,8 +24,19 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "divining_rod.gemspec",
+     "example_config.rb",
      "lib/divining_rod.rb",
-     "spec/basic_spec.rb",
+     "lib/divining_rod/definition.rb",
+     "lib/divining_rod/mapper.rb",
+     "lib/divining_rod/mappings.rb",
+     "lib/divining_rod/matchers.rb",
+     "lib/divining_rod/murge.rb",
+     "lib/divining_rod/profile.rb",
+     "spec/definition_spec.rb",
+     "spec/example_mapping_spec.rb",
+     "spec/mapper_spec.rb",
+     "spec/mapping_spec.rb",
+     "spec/profile_spec.rb",
      "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/markpercival/divining_rod}
@@ -34,7 +45,11 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{A mobile phone web request profiler}
   s.test_files = [
-    "spec/basic_spec.rb",
+    "spec/definition_spec.rb",
+     "spec/example_mapping_spec.rb",
+     "spec/mapper_spec.rb",
+     "spec/mapping_spec.rb",
+     "spec/profile_spec.rb",
      "spec/spec_helper.rb"
   ]
 
