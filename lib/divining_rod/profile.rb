@@ -12,7 +12,7 @@ module DiviningRod
       if @match && @match.format
         @match.format
       else
-        @request.format
+        @request.params[:format]
       end
     end
 

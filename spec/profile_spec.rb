@@ -30,7 +30,7 @@ describe DiviningRod do
   describe "without a default route" do
     
     before :each do
-      @request = mock("rails_request", :user_agent => 'My Foo Fone', :format => :html)
+      @request = mock("rails_request", :user_agent => 'My Foo Fone', :params=> {:format => :html})
       
       DiviningRod::Mappings.define do |map|
         map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate]

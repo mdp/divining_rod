@@ -1,9 +1,8 @@
 module DiviningRod
   class Definition
-    include Murge
-
-    attr_accessor :prc, :group, :opts, :parent
-    attr_writer :children
+    include Utils
+    
+    attr_accessor :prc, :opts, :parent
 
     def initialize(opts={}, &blk)
       @prc = blk
@@ -43,10 +42,26 @@ module DiviningRod
     
     def children
       @children ||= []
-      @children.each do |child|
-        child.parent ||= self
+    end
+    
+    def hash
+      if @parent
+        hash_a_hash(opts, @parent.hash)
+      else
+        hash_a_hash(opts)
       end
-      @children
+    end
+    
+    # Returns a list of all descendents
+    #
+    def descendants
+      desc = children.collect { |child| child.descendants}
+      [children, desc].flatten
+    end
+    
+    def add_child(child)
+      children << child
+      child.parent = self
     end
 
   end
