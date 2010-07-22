@@ -13,7 +13,7 @@ describe DiviningRod::Mapper do
   end
   
   it "should map a definition" do
-    request = mock("rails_request", :user_agent => 'Apple Mobile Safari', :format => :html)
+    request = request_mock(:ua => 'Apple Mobile Safari', :format => :html)
     result = @root_definition.evaluate(request)
     result.tags.should include(:fuck)
   end

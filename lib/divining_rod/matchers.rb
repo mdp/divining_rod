@@ -4,7 +4,7 @@ module DiviningRod
       
       def ua(pattern, opts = {})
         Definition.new(opts) { |request|
-          if pattern.match(request.user_agent)
+          if pattern.match(request.env['HTTP_USER_AGENT'])
             true
           end
         }
@@ -12,7 +12,7 @@ module DiviningRod
       
       def subdomain(pattern, opts={})
         Definition.new(opts) { |request|
-          if pattern.match(request.subdomains[0])
+          if pattern.match(DiviningRod::Utilities.parse_subdomain(request)[0])
             true
           end
         }

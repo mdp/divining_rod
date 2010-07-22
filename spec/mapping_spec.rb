@@ -29,7 +29,7 @@ describe DiviningRod::Mappings do
   end
 
   it "should match a top level user agent" do
-    request = mock("rails_request", :user_agent => 'Apple Mobile Safari', :format => :html)
+    request = request_mock(:ua => 'Apple Mobile Safari', :format => :html)
     result = DiviningRod::Mappings.root_definition.evaluate(request)
     result.should_not be_nil
     result.tags.should include(:apple)
@@ -38,13 +38,13 @@ describe DiviningRod::Mappings do
   end
 
   it "should match a child definition" do
-    ipad_request = mock("rails_request", :user_agent => 'Apple iPad', :format => :html)
+    ipad_request = request_mock(:ua => 'Apple iPad', :format => :html)
     result = DiviningRod::Mappings.evaluate(ipad_request)
     result.tags.should include(:ipad)
   end
 
   it "should match a sub child definition" do
-    ipad_request = mock("rails_request", :user_agent => 'Apple iPad - now powered by Unicorns - OS 3.3', :format => :html)
+    ipad_request = request_mock(:ua => 'Apple iPad - now powered by Unicorns - OS 3.3', :format => :html)
     result = DiviningRod::Mappings.evaluate(ipad_request)
     result.tags.should include(:ipad)
     result.tags.should include(:omg_unicorns)
@@ -52,7 +52,7 @@ describe DiviningRod::Mappings do
   end
 
   it "should match a really really deep child definition" do
-    ipad_request = mock("rails_request", :user_agent => 'Apple iPad - now powered by Unicorns who eat kittens - OS 3.3', :format => :html)
+    ipad_request = request_mock(:ua => 'Apple iPad - now powered by Unicorns who eat kittens - OS 3.3', :format => :html)
     result = DiviningRod::Mappings.evaluate(ipad_request)
     result.tags.should include(:ipad, :youtube)
     result.tags.should include(:omg_unicorns)
@@ -61,7 +61,7 @@ describe DiviningRod::Mappings do
   end
 
   it "should match a in order defined" do
-    ipad_request = mock("rails_request", :user_agent => 'Apple iPad - now powered by Unicorns who eat kittens - OS 2', :format => :html)
+    ipad_request = request_mock(:ua => 'Apple iPad - now powered by Unicorns who eat kittens - OS 2', :format => :html)
     result = DiviningRod::Mappings.evaluate(ipad_request)
     result.tags.should include(:ipad, :youtube)
     result.tags.should_not include(:omg_they_eat_kittens, :omg_unicorns)
@@ -69,7 +69,7 @@ describe DiviningRod::Mappings do
   end
 
   it "should match a in order defined" do
-    ipad_request = mock("rails_request", :user_agent => 'Apple Newton - OS 8', :format => :html)
+    ipad_request = request_mock(:ua => 'Apple Newton - OS 8', :format => :html)
     result = DiviningRod::Mappings.evaluate(ipad_request)
     result.tags.should_not include(:omg_they_eat_kittens, :omg_unicorns)
     result.tags.should include(:os8)
