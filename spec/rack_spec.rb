@@ -20,8 +20,8 @@ describe DiviningRod do
   it "should profile an incoming request" do
     header 'User-Agent', "iPhone Safari"
     get "/"
-    last_request.mobile_profile.should be_an_instance_of(DiviningRod::Profile)
-    last_request.mobile_profile.iphone?.should be_true
+    last_request.env['divining_rod.profile'].should be_an_instance_of(DiviningRod::Profile)
+    last_request.env['divining_rod.profile'].iphone?.should be_true
   end
 
 end
