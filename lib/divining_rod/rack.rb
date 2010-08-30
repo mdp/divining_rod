@@ -1,0 +1,1 @@
+require 'divining_rod/rack/divining_rack'

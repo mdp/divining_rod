@@ -3,7 +3,7 @@ require 'spec_helper'
 describe DiviningRod do
 
   before :each do
-    @request = mock("rails_request", :user_agent => 'My iPhone which is actually an iPad')
+    @request = request_mock(:ua => 'My iPhone which is actually an iPad')
     
     DiviningRod::Mappings.define do |map|
       map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate] do |iphone|
@@ -30,7 +30,7 @@ describe DiviningRod do
   describe "without a default route" do
     
     before :each do
-      @request = mock("rails_request", :user_agent => 'My Foo Fone', :format => :html)
+      @request = request_mock(:ua => 'My Foo Fone', :format => :html)
       
       DiviningRod::Mappings.define do |map|
         map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate]
@@ -49,7 +49,7 @@ describe DiviningRod do
   describe "with a default route" do
     
     before :each do
-      @request = mock("rails_request", :user_agent => 'My Foo Fone')
+      @request = request_mock(:ua => 'My Foo Fone')
       
       DiviningRod::Mappings.define do |map|
         map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate]
@@ -68,7 +68,7 @@ describe DiviningRod do
   describe "without a default definition" do
 
     before :each do
-      @request = mock("rails_request", :user_agent => 'Foo Fone', :format => :html)
+      @request = request_mock(:ua => 'Foo Fone', :format => :html)
       
       DiviningRod::Mappings.define do |map|
         map.ua /iPhone/, :format => :webkit, :tags => [:iphone, :youtube, :geolocate]
@@ -84,7 +84,7 @@ describe DiviningRod do
   describe "matching a subdomain" do
 
     before :each do
-      @request = mock("rails_request", :user_agent => 'Foo Fone', :subdomains => ['wap'])
+      @request = request_mock(:ua => 'Foo Fone', :host => 'wap.example.com')
       
       DiviningRod::Mappings.define do |map|
         map.subdomain /wap/, :format => :wap, :tags => [:shitty]
@@ -102,7 +102,7 @@ describe DiviningRod do
   describe "matching the weird requests(no user_agent passed)" do
 
     before :each do
-      @request = mock("rails_request", :user_agent => nil, :subdomains => [])
+      @request = request_mock(:ua => nil, :subdomains => [])
       
       DiviningRod::Mappings.define do |map|
         map.ua /iPhone/, :format => :wap, :tags => [:shitty]

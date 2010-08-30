@@ -1,13 +1,8 @@
 require 'spec/spec_helper'
 require 'example_config'
 
-
-def request_mock(ua, subdomain = [])
-  mock('RailsRequest', :user_agent => ua, :subdomain => subdomain)
-end
-
 def profile_ua(ua)
-  DiviningRod::Profile.new(request_mock(ua))
+  DiviningRod::Profile.new(request_mock(:ua => ua))
 end
   
 

@@ -8,6 +8,7 @@ module DiviningRod
       def define(opts = {})
         @root_definition = Definition.new { true }
         yield Mapper.new(@root_definition, opts)
+        @root_definition.freeze
       end
       
       def evaluate(obj)
