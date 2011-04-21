@@ -1,14 +1,19 @@
 module DiviningRod
   class Mapper
     include Murge
-    
+
+    attr_reader :default_opts
+
     def initialize(parent, default_opts = {})
       @parent = parent
       @default_opts = default_opts
     end
 
     def pattern(type, pattern, opts = {})
-      opts = murge(default_options, opts)
+      opts = murge(default_opts, opts)
+      if @parent
+        opts = murge(@parent.opts, opts)
+      end
       definition = Matchers.send(type.to_sym, pattern, opts)
       append_to_parent(definition)
       if block_given?
@@ -16,7 +21,7 @@ module DiviningRod
       end
       definition
     end
-    
+
     def with_options(opts)
       yield self.class.new(@parent, opts)
     end
@@ -37,10 +42,6 @@ module DiviningRod
     end
 
     private
-    
-      def default_options
-        @default_opts || {}
-      end
 
       def append_to_parent(definition)
         if @parent

@@ -1,10 +1,10 @@
 module DiviningRod
-  class Profile
+  module Profiler
 
     def initialize(request)
-      @request = request.clone #Lets not mess with the real one
+      @request = request
     end
-    
+
     def match
       @match ||= DiviningRod::Mappings.evaluate(@request)
     end
@@ -37,4 +37,9 @@ module DiviningRod
     end
 
   end
+
+  class Profile
+    include Profiler
+  end
 end
+
