@@ -23,7 +23,7 @@ module DiviningRod
 
     def tagged?(tag)
       if match
-        match.tags.include?(tag.to_sym)
+        Array(match.tags).include?(tag.to_sym)
       else
         false
       end
