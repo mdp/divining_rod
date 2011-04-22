@@ -1,4 +1,4 @@
-DiviningRod::Mappings.define do |map|
+DiviningRod::Mapping.define do |map|
     # Android based phones
     map.ua /Android/, :format => :webkit, :name => 'Android', :tags => [:android, :youtube_capable, :google_gears]
 

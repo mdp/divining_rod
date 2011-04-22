@@ -1,6 +1,6 @@
 module DiviningRod
   class Utilities
-    
+
     def self.parse_subdomain(request)
       env = request.env
       if forwarded = env["HTTP_X_FORWARDED_HOST"]
@@ -14,6 +14,6 @@ module DiviningRod
         []
       end
     end
-    
+
   end
 end

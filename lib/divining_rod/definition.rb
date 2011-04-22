@@ -1,6 +1,5 @@
 module DiviningRod
   class Definition
-    include Murge
 
     attr_accessor :prc, :group, :opts, :parent
 

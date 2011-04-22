@@ -6,7 +6,7 @@ module DiviningRod
     end
 
     def match
-      @match ||= DiviningRod::Mappings.evaluate(@request)
+      @match ||= DiviningRod::Mapping.evaluate(@request)
     end
 
     def format
@@ -18,17 +18,21 @@ module DiviningRod
     end
 
     def recognized?
-      match != DiviningRod::Mappings.root_definition
+      match != DiviningRod::Mapping.root_definition
+    end
+
+    def tagged?(tag)
+      if match
+        match.tags.include?(tag.to_sym)
+      else
+        false
+      end
     end
 
     def method_missing(meth)
       if meth.to_s.match(/(.+)\?$/)
         tag = $1
-        if match
-          match.tags.include?(tag.to_s) ||  match.tags.include?(tag.to_sym) || match.tags == tag
-        else
-          false
-        end
+        tagged?(tag)
       elsif match.opts.include?(meth.to_sym)
         match.opts[meth]
       else

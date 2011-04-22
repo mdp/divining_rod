@@ -20,7 +20,7 @@ module DiviningRod
 
       def ua_prof(pattern, opts ={})
         Definition.new(opts) {|request|
-          if pattern.match(request.env['X_WAP_PROFILE'])
+          if pattern.match(request.env['HTTP_X_WAP_PROFILE'])
             true
           end
         }

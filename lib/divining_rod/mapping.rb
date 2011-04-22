@@ -1,20 +1,32 @@
 module DiviningRod
-  class Mapper
-    include Murge
+  class Mapping
+
+    class << self
+
+      attr_accessor :root_definition
+
+      def define(opts = {})
+        @root_definition = Definition.new { true }
+        yield Mapping.new(@root_definition, opts)
+        @root_definition
+      end
+
+      def evaluate(obj)
+        @root_definition.evaluate(obj)
+      end
+
+    end
 
     attr_reader :default_opts
 
     def initialize(parent, default_opts = {})
       @parent = parent
-      @default_opts = default_opts
+      @default_opts = Mash.new(default_opts)
     end
 
     def pattern(type, pattern, opts = {})
-      opts = murge(default_opts, opts)
-      if @parent
-        opts = murge(@parent.opts, opts)
-      end
-      definition = Matchers.send(type.to_sym, pattern, opts)
+      @opts = Mash.new(opts)
+      definition = Matchers.send(type.to_sym, pattern, merged_opts)
       append_to_parent(definition)
       if block_given?
         yield self.class.new(definition)
@@ -23,7 +35,14 @@ module DiviningRod
     end
 
     def with_options(opts)
-      yield self.class.new(@parent, opts)
+      @opts = Mash.new(opts)
+      yield self.class.new(@parent, merged_opts)
+    end
+
+    def merged_opts
+      opts = @parent.opts.merge(@opts) if @parent
+      opts = default_opts.merge(opts)
+      opts
     end
 
     def default(opts = {})
@@ -50,7 +69,6 @@ module DiviningRod
         definition
       end
 
+
   end
-
-
 end
