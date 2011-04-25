@@ -6,6 +6,7 @@ module DiviningRod
     end
 
     def merge(opts = {})
+      return self if opts.nil?
       if self[:tags] || opts[:tags]
         tags = Array(self[:tags]) | Array(opts[:tags])
         opts[:tags] = tags
