@@ -6,7 +6,7 @@ module DiviningRod
     end
 
     def match
-      @match ||= DiviningRod::Mapping.evaluate(@request)
+      @match ||= DiviningRod::Mappings.evaluate(@request)
     end
 
     def format
@@ -18,7 +18,7 @@ module DiviningRod
     end
 
     def recognized?
-      match != DiviningRod::Mapping.root_definition
+      match != DiviningRod::Mappings.root_definition
     end
 
     def tagged?(tag)

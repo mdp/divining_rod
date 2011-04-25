@@ -1,4 +1,4 @@
-require 'test/test_helper'
+require 'test_helper'
 
 module DiviningRod
   class MashTest < Test::Unit::TestCase

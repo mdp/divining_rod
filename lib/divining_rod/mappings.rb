@@ -1,5 +1,5 @@
 module DiviningRod
-  class Mapping
+  class Mappings
 
     class << self
 
@@ -7,7 +7,7 @@ module DiviningRod
 
       def define(opts = {})
         @root_definition = Definition.new { true }
-        yield Mapping.new(@root_definition, opts)
+        yield Mappings.new(@root_definition, opts)
         @root_definition
       end
 
