@@ -5,7 +5,7 @@ module DiviningRod
 
     def initialize(opts={}, &blk)
       @prc = blk
-      @opts = opts
+      @opts = Mash.new(opts)
     end
 
     def evaluate(request)

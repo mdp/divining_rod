@@ -49,12 +49,21 @@ class ExampleConfigTest < Test::Unit::TestCase
 
     context "recognizing desktop browsers" do
 
-      should "recognize Internet Explorer 7" do
-        profile = profile_ua("Mozilla/4.0 (compatible; MSIE 7.0b; Windows NT 6.0)")
+      should "recognize Internet Explorer 10" do
+        profile = profile_ua("Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 7.0)")
         assert profile.desktop?
-        assert_equal profile.version, 7
+        assert_equal profile.version, 10
+        assert profile.html5?
       end
 
+    end
+
+    context "with root definition options" do
+      should "carry through" do
+        profile = profile_ua("Unknown phone")
+        assert_equal "Unknown", profile.name
+        assert_equal :html, profile.format
+      end
     end
 
 

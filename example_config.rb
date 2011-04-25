@@ -1,4 +1,4 @@
-DiviningRod::Mappings.define do |map|
+DiviningRod::Mappings.define(:format => :html) do |map|
     # Android based phones
     map.ua /Android/, :format => :webkit, :name => 'Android', :tags => [:android, :youtube_capable, :google_gears]
 
@@ -22,10 +22,11 @@ DiviningRod::Mappings.define do |map|
         msie.ua /MSIE 6/, :version => 6
         msie.ua /MSIE 7/, :version => 7
         msie.ua /MSIE 8/, :version => 8
+        msie.ua /MSIE 10/, :version => 10, :tags => :html5
       end
     end
 
     # Enable this to forces a default format if unmatched
     # otherwise it will return the request.format
-    # map.default :format => :html
+    map.default :name => "Unknown"
 end
