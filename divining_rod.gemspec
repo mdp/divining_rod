@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Mark Percival"]
   s.email       = ["mark@markpercival.us"]
   s.homepage    = "http://github.com/mdp/divining_rod"
-  s.summary     = %q{An opinionated ruby encryption library}
-  s.description = %q{Supports OpenSSL compatible AES, HMAC, and RSA encryption}
+  s.summary     = %q{A mobile request profiler}
+  s.description = %q{A DSL for writing user agent profiles}
 
   s.rubyforge_project = "divining_rod"
 
