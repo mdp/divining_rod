@@ -8,12 +8,12 @@ A tool to profile web requests. Especially useful for mobile site development
     gem install divining_rod
 
 ## Example
-  
+
   Using the example configuration (found in [example_config.rb](http://github.com/markpercival/divining_rod/blob/master/example_config.rb))
-  
+
     # For a request with the user agent
     # "Mozilla/5.0 (iPhone; U; CPU iPhone OS 2_2_1 like Mac OS X; en-us) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5H11 Safari/525.20"
-    
+
     profile = DiviningRod::Profile.new(request)
     profile.iphone?           #=> true
     profile.name              #=> 'iPhone'
@@ -31,9 +31,9 @@ Matches happen in the order they are defined, and then proceed down to the subse
         iphone.ua /iPhone/, :tags => :iphone, :name => 'iPhone'
       end
     end
-    
+
 Will match "Apple iPad" first with the /Apple/ matcher, then with the /iPad/ matcher, and the tags will be
-    
+
     [:apple, :iphone_os, :ipad] # Notice tags get appended, *not* overridden.
 
 And _:format_ will be set to _nil_
@@ -43,7 +43,7 @@ Why _nil_? Because when :format is set to _nil_ and you ask for it, DiviningRod 
 ## Usage
 
 _initializers/divining\_rod.rb_
-    
+
     DiviningRod::Mappings.define do |map|
         # Android based phones
         map.ua /Android/, :format => :webkit, :name => 'Android', :tags => [:android, :youtube_capable, :google_gears]
@@ -58,16 +58,16 @@ _initializers/divining\_rod.rb_
         #Blackberry, needs more detail here
         map.ua /BlackBerry/, :tags => :blackberry, :name => 'BlackBerry'
         map.subdomain /wap/, :format => :wap, :tags => [:crappy_old_phone]
-        
+
         # Enable this to forces a default format if unmatched
         # otherwise it will return the request.format
-        # map.default :format => :html 
+        # map.default :format => :html
     end
 
 _initializers/mime\_types.rb_
-    
+
     Mime::Type.register_alias "text/html", :webkit
-    
+
 _app/controllers/mobile\_controller.rb_
 
     class MobileController < ApplicationController
@@ -84,7 +84,7 @@ _app/controllers/mobile\_controller.rb_
       end
 
     end
-    
+
 _app/views/mobile/show.webkit.html_
 
     <%- if @profile.iphone? %>
@@ -93,7 +93,7 @@ _app/views/mobile/show.webkit.html_
       <%= link_to "Direct download", @android_app_url %>
     <% end %>
 
-    
+
 ## Note on the development
 
 In version 0.3.* it was assumed you always passed in _format_. In 0.4 on, we require _format_ to
