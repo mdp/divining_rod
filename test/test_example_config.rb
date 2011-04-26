@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'example_config'
+require 'test_config'
 
 def profile_ua(ua)
   DiviningRod::Profile.new(request_mock(:ua => ua))
