@@ -5,8 +5,7 @@ module DiviningRod
       self.replace(hsh || {})
     end
 
-    def merge(opts = {})
-      return self if opts.nil?
+    def merge(opts)
       if self[:tags] || opts[:tags]
         tags = Array(self[:tags]) | Array(opts[:tags])
         opts[:tags] = tags

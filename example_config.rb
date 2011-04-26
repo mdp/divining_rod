@@ -19,6 +19,7 @@ DiviningRod::Mappings.define(:format => :html) do |map|
       desktop.ua /Safari/, :tags => :safari, :name => 'Safari'
       desktop.ua /Opera/, :tags => :opera, :name => 'Opera'
       desktop.ua /MSIE/, :tags => :ie, :name => 'Internet Explorer' do |msie|
+        msie.ua /MSIE 5\.5/
         msie.ua /MSIE 6/, :version => 6
         msie.ua /MSIE 7/, :version => 7
         msie.ua /MSIE 8/, :version => 8

@@ -46,7 +46,8 @@ module DiviningRod
     def method_missing(meth, *args, &blk)
       # Lets us use map.ua instead of map.pattern :ua
       if Matchers.respond_to?(meth.to_sym)
-        self.pattern(meth, args[0], args[1,], &blk)
+        opts = args[1,] || {}
+        self.pattern(meth, args[0], opts, &blk)
       else
         super
       end
