@@ -10,8 +10,16 @@ DiviningRod::Mappings.define(:format => :html, :tags => [:foo]) do |map|
     map.ua /FifthMatch/, :name => 'FifthMatch', :tags => [:fifth_match, :and_more]
     map.ua /ThirdMatch/, :name => "Failure", :tags => [:failed] # Shouldn't get here
 
+    map.ua /Stuffed Crust/, :name => 'Stuffed Crust', :tags => [:woo_hoo] do |sc|
+      sc.ua /Vegan/, :name => 'Bleh'
+      sc.with_options :name => "Meat and Cheese" do |mac|
+        mac.ua /With Bacon/, :tags => :bacon
+        mac.ua /With Ham/, :tags => :round_bacon
+        mac.ua /With Tofu/, :tags => :tofu, :name => "NotMeat and Cheese"
+      end
+    end
+
     map.with_options :tags => :second_group do |second_group|
-      # No values assigned, should just be the second_group tag
       second_group.ua /ThirdMatch/
       second_group.ua /SixthMatch/
     end
@@ -40,6 +48,15 @@ class ExampleConfigTest < Test::Unit::TestCase
       should "not affect subsequest matches" do
         profile = profile_ua("Last")
         assert_equal [:foo, :last], profile.tags
+      end
+    end
+
+    context "matching a sub options group" do
+      should "overide the parent" do
+        profile = profile_ua("Stuffed Crust With Tofu")
+        assert_equal "NotMeat and Cheese", profile.name
+        profile = profile_ua("Stuffed Crust With Bacon")
+        assert_equal "Meat and Cheese", profile.name
       end
     end
 

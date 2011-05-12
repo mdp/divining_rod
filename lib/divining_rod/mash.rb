@@ -6,6 +6,7 @@ module DiviningRod
     end
 
     def merge(opts)
+      opts = opts.dup
       if self[:tags] || opts[:tags]
         tags = Array(self[:tags]) | Array(opts[:tags])
         opts[:tags] = tags

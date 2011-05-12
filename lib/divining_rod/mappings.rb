@@ -21,6 +21,10 @@ module DiviningRod
 
     def initialize(parent, default_opts = {})
       @parent = parent
+      unless default_opts == {}
+        p "Passed in default_opts"
+        p default_opts
+      end
       @default_opts = Mash.new(default_opts)
     end
 
@@ -56,8 +60,8 @@ module DiviningRod
     private
 
     def merged_opts(opts)
-      opts = parent.opts.merge(opts)
       opts = default_opts.merge(opts)
+      opts = parent.opts.merge(opts)
       opts
     end
 
@@ -65,7 +69,6 @@ module DiviningRod
       parent.children << definition
       definition
     end
-
 
   end
 end
