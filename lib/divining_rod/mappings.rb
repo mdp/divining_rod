@@ -21,10 +21,6 @@ module DiviningRod
 
     def initialize(parent, default_opts = {})
       @parent = parent
-      unless default_opts == {}
-        p "Passed in default_opts"
-        p default_opts
-      end
       @default_opts = Mash.new(default_opts)
     end
 
