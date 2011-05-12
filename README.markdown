@@ -93,11 +93,25 @@ _app/views/mobile/show.webkit.html_
       <%= link_to "Direct download", @android_app_url %>
     <% end %>
 
+## Writing your own custom profiler
 
-## Note on the development
+You can also include the DiviningRod::Profiler mixin in your own custom class
 
-In version 0.3.* it was assumed you always passed in _format_. In 0.4 on, we require _format_ to
-be passed in explicitly with the rest of the options hash.
+_lib/browser_profile.rb_
+
+    class BrowserProfile
+      include DivingingRod::Profiler
+
+      def has_an_app_store?
+        android? || iphone? || windows_phone?
+      end
+
+    end
+
+Usage
+
+    prof = BrowserProfile.new(request)
+    prof.has_an_app_store?
 
 ## Todo
 
